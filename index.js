@@ -19,7 +19,14 @@ const port = 8080
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("x-gym").collection("gymList");
-  // perform actions on the collection object
+  app.post('/addGymList',(req,res)=>{
+      const gymLists=req.body;
+      console.log(gymLists);
+      collection.insertMany(gymLists)
+      .then(result=>{
+          res.send(result.insertedCount)
+      })
+  })
   console.log("connected");
 });
 
